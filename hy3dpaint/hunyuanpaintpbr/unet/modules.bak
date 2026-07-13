@@ -780,8 +780,8 @@ class UNet2p5DConditionModel(torch.nn.Module):
         super().__init__()
         self.unet = unet
         # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
-        if torch.version.hip is None:
-            self.unet.enable_model_cpu_offload()
+	if torch.version.hip is None:
+	    self.unet.enable_model_cpu_offload()
         self.train_sched = train_sched
         self.val_sched = val_sched
 
@@ -830,8 +830,8 @@ class UNet2p5DConditionModel(torch.nn.Module):
         )
         unet_ckpt = torch.load(unet_ckpt_path, map_location="cpu", weights_only=True)
         unet_2p5d.load_state_dict(unet_ckpt, strict=True)
-        if torch.version.hip is None:
-            unet_2p5d.enable_model_cpu_offload()
+    	if torch.version.hip is None:	        
+	    unet_2p5d.enable_model_cpu_offload()
         unet_2p5d = unet_2p5d.to(torch_dtype)
         return unet_2p5d
 

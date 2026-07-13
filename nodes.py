@@ -591,7 +591,20 @@ class Hy3D21VAELoader:
 
         model_path = folder_paths.get_full_path("vae", model_name)
 
+        print("=" * 80)
+        print("VAE MODEL NAME:", model_name)
+        print("VAE MODEL PATH:", model_path)
+
         vae_sd = load_torch_file(model_path)
+
+        print(type(vae_sd))
+        print(list(vae_sd.keys())[:20])
+
+        #if(vae_config==None):	
+
+        #model_path = folder_paths.get_full_path("vae", model_name)
+
+        #vae_sd = load_torch_file(model_path)
         
         if(vae_config==None):
             vae_config = {

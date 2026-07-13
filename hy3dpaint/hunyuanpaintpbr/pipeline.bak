@@ -108,14 +108,6 @@ class HunyuanPaintPipeline(StableDiffusionPipeline):
         self.vae_scale_factor = 2 ** (len(self.vae.config.block_out_channels) - 1)
         self.image_processor = VaeImageProcessor(vae_scale_factor=self.vae_scale_factor)
 
-        # ROCm: avoid Accelerate meta-tensor offloading hooks.
-        if getattr(torch.version, "hip", None) is not None:
-            device = torch.device("cuda")
-            self.vae = self.vae.to(device)
-            self.text_encoder = self.text_encoder.to(device)
-            if hasattr(self.unet, "to"):
-                self.unet = self.unet.to(device)
-
         if isinstance(self.unet, UNet2DConditionModel):
             self.unet = UNet2p5DConditionModel(self.unet, None, self.scheduler)
 
@@ -738,8 +730,7 @@ class HunyuanPaintPipeline(StableDiffusionPipeline):
         image = self.image_processor.postprocess(image, output_type=output_type, do_denormalize=do_denormalize)
 
         # Offload all models
-        if getattr(torch.version, "hip", None) is None:
-            self.maybe_free_model_hooks()
+        self.maybe_free_model_hooks()
 
         if not return_dict:
             return (image, has_nsfw_concept)

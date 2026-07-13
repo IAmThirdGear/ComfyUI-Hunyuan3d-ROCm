@@ -259,17 +259,6 @@ class HierarchicalVolumeDecoding:
                 next_index = dilate(next_index.unsqueeze(0)).squeeze(0)
             nidx = torch.where(next_index > 0)
 
-            if len(nidx[0]) == 0:
-                print("=" * 80)
-                print("ERROR: No surface points found")
-                print("grid_logits min:", grid_logits.min().item())
-                print("grid_logits max:", grid_logits.max().item())
-                print("grid_logits mean:", grid_logits.mean().item())
-                print("mc_level:", mc_level)
-                print("octree_depth_now:", octree_depth_now)
-                print("=" * 80)
-                raise RuntimeError("No surface points found")
-
             next_points = torch.stack(nidx, dim=1)
             next_points = (next_points * torch.tensor(resolution, dtype=next_points.dtype, device=device) +
                            torch.tensor(bbox_min, dtype=next_points.dtype, device=device))

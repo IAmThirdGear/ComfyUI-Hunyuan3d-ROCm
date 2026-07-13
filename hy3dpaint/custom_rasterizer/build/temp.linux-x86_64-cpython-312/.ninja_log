@@ -1,0 +1,4 @@
+# ninja log v7
+0	14803	1783715771393617505	/home/jgroot/ComfyUI/custom_nodes/ComfyUI-Hunyuan3d-2-1/hy3dpaint/custom_rasterizer/build/temp.linux-x86_64-cpython-312/lib/custom_rasterizer_kernel/rasterizer_hip.o	eb386956376b29a2
+0	15269	1783715771392517878	/home/jgroot/ComfyUI/custom_nodes/ComfyUI-Hunyuan3d-2-1/hy3dpaint/custom_rasterizer/build/temp.linux-x86_64-cpython-312/lib/custom_rasterizer_kernel/grid_neighbor_hip.o	5ddde1a2b706466f
+0	109079	1783715771393531674	/home/jgroot/ComfyUI/custom_nodes/ComfyUI-Hunyuan3d-2-1/hy3dpaint/custom_rasterizer/build/temp.linux-x86_64-cpython-312/lib/custom_rasterizer_kernel/rasterizer_gpu.o	915eab7b3ec534ed
