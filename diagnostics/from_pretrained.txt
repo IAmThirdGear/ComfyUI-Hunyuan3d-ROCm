@@ -1,0 +1,21 @@
+./hy3dpaint/hunyuanpaintpbr/unet/model.py:80:        pipeline = DiffusionPipeline.from_pretrained(**stable_diffusion_config)
+./hy3dpaint/hunyuanpaintpbr/unet/model.py:108:                ControlNetModel.from_pretrained(control_net_config.pretrained_model_name_or_path),
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:51:        self.dino_processor = AutoImageProcessor.from_pretrained(dino_v2_path)
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:52:        self.dino_v2 = AutoModel.from_pretrained(dino_v2_path)
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:813:    def from_pretrained(pretrained_model_name_or_path, **kwargs):
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:51:        self.dino_processor = AutoImageProcessor.from_pretrained(dino_v2_path)
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:52:        self.dino_v2 = AutoModel.from_pretrained(dino_v2_path)
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:813:    def from_pretrained(pretrained_model_name_or_path, **kwargs):
+./hy3dpaint/utils/multiview_utils.bak_patched:45:        pipeline = HunyuanPaintPipeline.from_pretrained(
+./hy3dpaint/utils/multiview_utils.bak:45:	        pipeline = HunyuanPaintPipeline.from_pretrained(
+./hy3dpaint/utils/multiview_utils.bak:83:        #pipeline = HunyuanPaintPipeline.from_pretrained(
+./hy3dpaint/utils/multiview_utils.py:45:        pipeline = HunyuanPaintPipeline.from_pretrained(
+./hy3dpaint/utils/multiview_utils.py:83:        #pipeline = HunyuanPaintPipeline.from_pretrained(
+./hy3dshape/hy3dshape/models/autoencoders/model.py:157:    def from_pretrained(
+./hy3dshape/hy3dshape/models/conditioner.py:69:            self.model = self.MODEL_CLASS.from_pretrained(version)
+./hy3dshape/hy3dshape/pipelines.py:208:    def from_pretrained(
+./hy3dshape/hy3dshape/pipelines.py:283:                self.vae = ShapeVAE.from_pretrained(
+./hy3dshape/hy3dshape/pipelines.py:304:                self.vae = ShapeVAE.from_pretrained(model_path, subfolder=subfolder)
+./hy3dshape/hy3dshape/utils/misc.py:52:        return cls.from_pretrained(
+./hy3dshape/minimal_demo.py:21:pipeline_shapegen = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained(model_path)
+./hy3dshape/minimal_vae_demo.py:22:vae = ShapeVAE.from_pretrained(

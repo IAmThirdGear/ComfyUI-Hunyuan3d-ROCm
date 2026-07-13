@@ -1,0 +1,248 @@
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:636:        texture_metallic, texture_roughness = self.get_texture_mr()
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:640:            if texture_metallic is not None:
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:641:                texture_metallic = cv2.resize(
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:642:                    texture_metallic, (texture_metallic.shape[1] // 2, texture_metallic.shape[0] // 2)
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:660:            metallic=texture_metallic,
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:743:        """Set metallic-roughness texture for PBR rendering."""
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:855:        Get metallic and roughness textures as separate channels.
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:858:            Tuple of (metallic_texture, roughness_texture) as numpy arrays, or (None, None) if not set
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:860:        metallic, roughness = None, None
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:863:            metallic = np.repeat(mr[:, :, 0:1], repeats=3, axis=2)
+./hy3dpaint/DifferentiableRenderer/MeshRender.py:865:        return metallic, roughness
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:120:def save_obj_mesh(mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=None, roughness=None, normal=None):
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:139:    if metallic is not None:
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:140:        texture_maps["metallic"] = _save_texture_map(metallic, base_path, "_metallic", color_convert=cv2.COLOR_RGB2GRAY)
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:149:    _create_mtl_file(base_path, texture_maps, metallic is not None)
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:172:            map_configs = [("metallic", "map_Pm"), ("roughness", "map_Pr"), ("normal", "map_Bump -bm 1.0")]
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:193:def save_mesh(mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=None, roughness=None, normal=None):
+./hy3dpaint/DifferentiableRenderer/mesh_utils.py:196:        mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=metallic, roughness=roughness, normal=normal
+./hy3dpaint/convert_utils.py:9:def combine_metallic_roughness(metallic_path, roughness_path, output_path):
+./hy3dpaint/convert_utils.py:11:    将metallic和roughness贴图合并为一张贴图
+./hy3dpaint/convert_utils.py:12:    GLB格式要求metallic在B通道，roughness在G通道
+./hy3dpaint/convert_utils.py:15:    metallic_img = Image.open(metallic_path).convert("L")  # 转为灰度
+./hy3dpaint/convert_utils.py:19:    if metallic_img.size != roughness_img.size:
+./hy3dpaint/convert_utils.py:20:        roughness_img = roughness_img.resize(metallic_img.size)
+./hy3dpaint/convert_utils.py:23:    width, height = metallic_img.size
+./hy3dpaint/convert_utils.py:27:    metallic_array = np.array(metallic_img)
+./hy3dpaint/convert_utils.py:34:    combined_array[:, :, 2] = metallic_array  # B通道：Metallic
+./hy3dpaint/convert_utils.py:48:        'metallic': 'path/to/metallic.png',
+./hy3dpaint/convert_utils.py:72:    # 5. 合并metallic和roughness
+./hy3dpaint/convert_utils.py:73:    if "metallic" in textures_dict and "roughness" in textures_dict:
+./hy3dpaint/convert_utils.py:75:        combine_metallic_roughness(textures_dict["metallic"], textures_dict["roughness"], mr_combined_path)
+./hy3dpaint/convert_utils.py:76:        textures_dict["metallicRoughness"] = mr_combined_path
+./hy3dpaint/convert_utils.py:84:        "metallicRoughness": "metallicRoughnessTexture",
+./hy3dpaint/convert_utils.py:100:    pbr_metallic_roughness = pygltflib.PbrMetallicRoughness(
+./hy3dpaint/convert_utils.py:101:        baseColorFactor=[1.0, 1.0, 1.0, 1.0], metallicFactor=1.0, roughnessFactor=1.0
+./hy3dpaint/convert_utils.py:107:        pbr_metallic_roughness.baseColorTexture = pygltflib.TextureInfo(index=texture_index)
+./hy3dpaint/convert_utils.py:110:    if "metallicRoughness" in textures_dict:
+./hy3dpaint/convert_utils.py:111:        pbr_metallic_roughness.metallicRoughnessTexture = pygltflib.TextureInfo(index=texture_index)
+./hy3dpaint/convert_utils.py:115:    material = pygltflib.Material(name="PBR_Material", pbrMetallicRoughness=pbr_metallic_roughness)
+./hy3dpaint/hunyuanpaintpbr/unet/attn_processor.py:642:    This processor handles multiple PBR material types (e.g., albedo, metallic-roughness)
+./hy3dpaint/hunyuanpaintpbr/unet/model.py:69:            pbr_settings: List of PBR materials to generate (e.g., albedo, metallic-roughness)
+./hy3dpaint/hunyuanpaintpbr/unet/model.py:304:        4. PBR-specific losses (albedo/metallic-roughness)
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:265:        dict: Voxel indices keyed by flattened dimension size, with resolution metadata
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:265:        dict: Voxel indices keyed by flattened dimension size, with resolution metadata
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./hy3dpaint/textureGenPipeline.py:44:        'metallic': obj_path.replace('.obj', '_metallic.jpg'),
+./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:57:                "bbox": False, "roughness": 0.5, "metalness": 0.25, "reflectivity": 1.0,
+./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:271:                                                roughness=sh["roughness"], metalness=sh["metalness"],
+./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:277:                                                side=sh["side"], roughness=sh["roughness"], metalness=sh["metalness"],
+./nodes.py:415:    RETURN_NAMES = ("pipeline", "albedo","mr","positions","normals","camera_config", "metadata")
+./nodes.py:1401:                "export_metadata": ("BOOLEAN",{"default":True,"tooltip":"Exporta json file with camera config and multiviews"}),
+./nodes.py:1416:    def process(self, output_folder, camera_config, view_size, steps, guidance_scale, texture_size, unwrap_mesh, seed, generate_random_seed, remove_background, skip_generated_mesh, upscale_multiviews, upscale_model_name, export_multiviews, export_metadata, input_images_folder = None, input_meshes_folder = None):       
+./nodes.py:1457:                            metaData = MetaData()
+./nodes.py:1458:                            metaData.camera_config = camera_config
+./nodes.py:1473:                                metaData.albedos = []
+./nodes.py:1474:                                metaData.mrs = []
+./nodes.py:1479:                                    metaData.albedos.append(f'Albedo_{index}.png')
+./nodes.py:1484:                                    metaData.mrs.append(f'MR_{index}.png')
+./nodes.py:1527:                                        metaData.albedos_upscaled = []
+./nodes.py:1531:                                            metaData.albedos_upscaled.append(f'Albedo_Upscaled_{index}.png')
+./nodes.py:1558:                                        metaData.mrs_upscaled = []
+./nodes.py:1562:                                            metaData.mrs_upscaled.append(f'MR_Upscaled_{index}.png')
+./nodes.py:1576:                            metaData.mesh_file = f'{output_file_name}.glb'
+./nodes.py:1578:                            if export_metadata:
+./nodes.py:1579:                                output_metadata_path = os.path.join(output_mesh_folder,'meta_data.json')
+./nodes.py:1580:                                with open(output_metadata_path,'w') as fw:
+./nodes.py:1581:                                    json.dump(metaData.__dict__, indent="\t", fp=fw)
+./nodes.py:1644:                "metadata_file": ("STRING",),
+./nodes.py:1655:    def process(self, trimesh, metadata_file, view_size, texture_size):
+./nodes.py:1659:        with open(metadata_file, 'r') as fr:
+./nodes.py:1661:            loaded_metaData = MetaData()
+./nodes.py:1663:                setattr(loaded_metaData, key, value)        
+./nodes.py:1665:        conf = Hunyuan3DPaintConfig(view_size, loaded_metaData.camera_config["selected_camera_azims"], loaded_metaData.camera_config["selected_camera_elevs"], loaded_metaData.camera_config["selected_view_weights"], loaded_metaData.camera_config["ortho_scale"], texture_size)
+./nodes.py:1670:        dir_name = os.path.dirname(metadata_file)
+./nodes.py:1675:        if loaded_metaData.albedos_upscaled != None:
+./nodes.py:1677:            for file in loaded_metaData.albedos_upscaled:
+./nodes.py:1682:            for file in loaded_metaData.mrs_upscaled:
+./nodes.py:1688:            for file in loaded_metaData.albedos:
+./nodes.py:1693:            for file in loaded_metaData.mrs:
+./nodes.py:1701:        return (paint_pipeline, albedos_tensor, mrs_tensor, loaded_metaData.camera_config)     
+./nodes.py:1722:    RETURN_NAMES = ("pipeline", "albedo","mr","metadata","positions","normals",)
+./nodes.py:1751:        metadata = MetaData()
+./nodes.py:1752:        metadata.mesh_file = output_name
+./nodes.py:1753:        metadata.camera_config = camera_config
+./nodes.py:1754:        metadata.albedos = []
+./nodes.py:1755:        metadata.mrs = []
+./nodes.py:1762:            metadata.albedos.append(f'Albedo_{index}.png')
+./nodes.py:1768:            metadata.mrs.append(f'MR_{index}.png')            
+./nodes.py:1770:        return (paint_pipeline, albedo_tensor, mr_tensor, metadata, positions_tensor, normals_tensor,)  
+./nodes.py:1780:                "metadata": ("HY3D21METADATA",),
+./nodes.py:1789:    def process(self, pipeline, albedo, mr, metadata):  
+./nodes.py:1796:        output_mesh_name = metadata.mesh_file
+./nodes.py:1804:            metadata.albedos_upscaled = []
+./nodes.py:1805:            metadata.mrs_upscaled = []
+./nodes.py:1810:                metadata.albedos_upscaled.append(f'Albedo_Upscaled_{index}.png')
+./nodes.py:1815:                metadata.mrs_upscaled.append(f'MR_Upscaled_{index}.png')                
+./nodes.py:1817:        camera_config = metadata.camera_config
+./nodes.py:1840:        metadata.mesh_file = f'{output_mesh_name}.glb'
+./nodes.py:1842:        output_metadata_path = os.path.join(output_dir_path,'meta_data.json')
+./nodes.py:1843:        with open(output_metadata_path,'w') as fw:
+./nodes.py:1844:            json.dump(metadata.__dict__, indent="\t", fp=fw)            
+./nodes.py:1859:                "metadata_file": ("STRING",),
+./nodes.py:1872:    def process(self, metadata_file, view_size, texture_size, target_face_nums):   
+./nodes.py:1885:        with open(metadata_file, 'r') as fr:
+./nodes.py:1887:            loaded_metaData = MetaData()
+./nodes.py:1889:                setattr(loaded_metaData, key, value)        
+./nodes.py:1893:            input_dir = os.path.dirname(metadata_file)
+./nodes.py:1894:            mesh_name = loaded_metaData.mesh_file.replace(".glb","").replace(".obj","")
+./nodes.py:1895:            mesh_file_path = os.path.join(input_dir, loaded_metaData.mesh_file)
+./nodes.py:1898:                conf = Hunyuan3DPaintConfig(view_size, loaded_metaData.camera_config["selected_camera_azims"], loaded_metaData.camera_config["selected_camera_elevs"], loaded_metaData.camera_config["selected_view_weights"], loaded_metaData.camera_config["ortho_scale"], texture_size)
+./nodes.py:1907:                if loaded_metaData.albedos_upscaled != None:
+./nodes.py:1909:                    for file in loaded_metaData.albedos_upscaled:
+./nodes.py:1914:                    for file in loaded_metaData.mrs_upscaled:
+./nodes.py:1920:                    for file in loaded_metaData.albedos:
+./nodes.py:1925:                    for file in loaded_metaData.mrs:
+./nodes.py:1952:                    camera_config = loaded_metaData.camera_config
+./workflow_examples/Mesh_Texturing_With_MetaData.json:192:          "name": "metadata",
+./workflow_examples/Mesh_Texturing_With_MetaData.json:339:          "name": "metadata",
+./workflow_examples/Mesh_Texturing_With_MetaData_Upscaled_With_Model.json:192:          "name": "metadata",
+./workflow_examples/Mesh_Texturing_With_MetaData_Upscaled_With_Model.json:339:          "name": "metadata",
+./diagnostics/meta.txt:1:./hy3dpaint/DifferentiableRenderer/MeshRender.py:636:        texture_metallic, texture_roughness = self.get_texture_mr()
+./diagnostics/meta.txt:2:./hy3dpaint/DifferentiableRenderer/MeshRender.py:640:            if texture_metallic is not None:
+./diagnostics/meta.txt:3:./hy3dpaint/DifferentiableRenderer/MeshRender.py:641:                texture_metallic = cv2.resize(
+./diagnostics/meta.txt:4:./hy3dpaint/DifferentiableRenderer/MeshRender.py:642:                    texture_metallic, (texture_metallic.shape[1] // 2, texture_metallic.shape[0] // 2)
+./diagnostics/meta.txt:5:./hy3dpaint/DifferentiableRenderer/MeshRender.py:660:            metallic=texture_metallic,
+./diagnostics/meta.txt:6:./hy3dpaint/DifferentiableRenderer/MeshRender.py:743:        """Set metallic-roughness texture for PBR rendering."""
+./diagnostics/meta.txt:7:./hy3dpaint/DifferentiableRenderer/MeshRender.py:855:        Get metallic and roughness textures as separate channels.
+./diagnostics/meta.txt:8:./hy3dpaint/DifferentiableRenderer/MeshRender.py:858:            Tuple of (metallic_texture, roughness_texture) as numpy arrays, or (None, None) if not set
+./diagnostics/meta.txt:9:./hy3dpaint/DifferentiableRenderer/MeshRender.py:860:        metallic, roughness = None, None
+./diagnostics/meta.txt:10:./hy3dpaint/DifferentiableRenderer/MeshRender.py:863:            metallic = np.repeat(mr[:, :, 0:1], repeats=3, axis=2)
+./diagnostics/meta.txt:11:./hy3dpaint/DifferentiableRenderer/MeshRender.py:865:        return metallic, roughness
+./diagnostics/meta.txt:12:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:120:def save_obj_mesh(mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=None, roughness=None, normal=None):
+./diagnostics/meta.txt:13:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:139:    if metallic is not None:
+./diagnostics/meta.txt:14:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:140:        texture_maps["metallic"] = _save_texture_map(metallic, base_path, "_metallic", color_convert=cv2.COLOR_RGB2GRAY)
+./diagnostics/meta.txt:15:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:149:    _create_mtl_file(base_path, texture_maps, metallic is not None)
+./diagnostics/meta.txt:16:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:172:            map_configs = [("metallic", "map_Pm"), ("roughness", "map_Pr"), ("normal", "map_Bump -bm 1.0")]
+./diagnostics/meta.txt:17:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:193:def save_mesh(mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=None, roughness=None, normal=None):
+./diagnostics/meta.txt:18:./hy3dpaint/DifferentiableRenderer/mesh_utils.py:196:        mesh_path, vtx_pos, pos_idx, vtx_uv, uv_idx, texture, metallic=metallic, roughness=roughness, normal=normal
+./diagnostics/meta.txt:19:./hy3dpaint/convert_utils.py:9:def combine_metallic_roughness(metallic_path, roughness_path, output_path):
+./diagnostics/meta.txt:20:./hy3dpaint/convert_utils.py:11:    将metallic和roughness贴图合并为一张贴图
+./diagnostics/meta.txt:21:./hy3dpaint/convert_utils.py:12:    GLB格式要求metallic在B通道，roughness在G通道
+./diagnostics/meta.txt:22:./hy3dpaint/convert_utils.py:15:    metallic_img = Image.open(metallic_path).convert("L")  # 转为灰度
+./diagnostics/meta.txt:23:./hy3dpaint/convert_utils.py:19:    if metallic_img.size != roughness_img.size:
+./diagnostics/meta.txt:24:./hy3dpaint/convert_utils.py:20:        roughness_img = roughness_img.resize(metallic_img.size)
+./diagnostics/meta.txt:25:./hy3dpaint/convert_utils.py:23:    width, height = metallic_img.size
+./diagnostics/meta.txt:26:./hy3dpaint/convert_utils.py:27:    metallic_array = np.array(metallic_img)
+./diagnostics/meta.txt:27:./hy3dpaint/convert_utils.py:34:    combined_array[:, :, 2] = metallic_array  # B通道：Metallic
+./diagnostics/meta.txt:28:./hy3dpaint/convert_utils.py:48:        'metallic': 'path/to/metallic.png',
+./diagnostics/meta.txt:29:./hy3dpaint/convert_utils.py:72:    # 5. 合并metallic和roughness
+./diagnostics/meta.txt:30:./hy3dpaint/convert_utils.py:73:    if "metallic" in textures_dict and "roughness" in textures_dict:
+./diagnostics/meta.txt:31:./hy3dpaint/convert_utils.py:75:        combine_metallic_roughness(textures_dict["metallic"], textures_dict["roughness"], mr_combined_path)
+./diagnostics/meta.txt:32:./hy3dpaint/convert_utils.py:76:        textures_dict["metallicRoughness"] = mr_combined_path
+./diagnostics/meta.txt:33:./hy3dpaint/convert_utils.py:84:        "metallicRoughness": "metallicRoughnessTexture",
+./diagnostics/meta.txt:34:./hy3dpaint/convert_utils.py:100:    pbr_metallic_roughness = pygltflib.PbrMetallicRoughness(
+./diagnostics/meta.txt:35:./hy3dpaint/convert_utils.py:101:        baseColorFactor=[1.0, 1.0, 1.0, 1.0], metallicFactor=1.0, roughnessFactor=1.0
+./diagnostics/meta.txt:36:./hy3dpaint/convert_utils.py:107:        pbr_metallic_roughness.baseColorTexture = pygltflib.TextureInfo(index=texture_index)
+./diagnostics/meta.txt:37:./hy3dpaint/convert_utils.py:110:    if "metallicRoughness" in textures_dict:
+./diagnostics/meta.txt:38:./hy3dpaint/convert_utils.py:111:        pbr_metallic_roughness.metallicRoughnessTexture = pygltflib.TextureInfo(index=texture_index)
+./diagnostics/meta.txt:39:./hy3dpaint/convert_utils.py:115:    material = pygltflib.Material(name="PBR_Material", pbrMetallicRoughness=pbr_metallic_roughness)
+./diagnostics/meta.txt:40:./hy3dpaint/hunyuanpaintpbr/unet/attn_processor.py:642:    This processor handles multiple PBR material types (e.g., albedo, metallic-roughness)
+./diagnostics/meta.txt:41:./hy3dpaint/hunyuanpaintpbr/unet/model.py:69:            pbr_settings: List of PBR materials to generate (e.g., albedo, metallic-roughness)
+./diagnostics/meta.txt:42:./hy3dpaint/hunyuanpaintpbr/unet/model.py:304:        4. PBR-specific losses (albedo/metallic-roughness)
+./diagnostics/meta.txt:43:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:265:        dict: Voxel indices keyed by flattened dimension size, with resolution metadata
+./diagnostics/meta.txt:44:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:45:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:265:        dict: Voxel indices keyed by flattened dimension size, with resolution metadata
+./diagnostics/meta.txt:46:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:47:./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./diagnostics/meta.txt:48:./hy3dpaint/textureGenPipeline.py:44:        'metallic': obj_path.replace('.obj', '_metallic.jpg'),
+./diagnostics/meta.txt:49:./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/meta.txt:50:./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/meta.txt:51:./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:57:                "bbox": False, "roughness": 0.5, "metalness": 0.25, "reflectivity": 1.0,
+./diagnostics/meta.txt:52:./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:271:                                                roughness=sh["roughness"], metalness=sh["metalness"],
+./diagnostics/meta.txt:53:./hy3dshape/hy3dshape/utils/visualizers/pythreejs_viewer.py:277:                                                side=sh["side"], roughness=sh["roughness"], metalness=sh["metalness"],
+./diagnostics/meta.txt:54:./nodes.py:415:    RETURN_NAMES = ("pipeline", "albedo","mr","positions","normals","camera_config", "metadata")
+./diagnostics/meta.txt:55:./nodes.py:1401:                "export_metadata": ("BOOLEAN",{"default":True,"tooltip":"Exporta json file with camera config and multiviews"}),
+./diagnostics/meta.txt:56:./nodes.py:1416:    def process(self, output_folder, camera_config, view_size, steps, guidance_scale, texture_size, unwrap_mesh, seed, generate_random_seed, remove_background, skip_generated_mesh, upscale_multiviews, upscale_model_name, export_multiviews, export_metadata, input_images_folder = None, input_meshes_folder = None):       
+./diagnostics/meta.txt:57:./nodes.py:1457:                            metaData = MetaData()
+./diagnostics/meta.txt:58:./nodes.py:1458:                            metaData.camera_config = camera_config
+./diagnostics/meta.txt:59:./nodes.py:1473:                                metaData.albedos = []
+./diagnostics/meta.txt:60:./nodes.py:1474:                                metaData.mrs = []
+./diagnostics/meta.txt:61:./nodes.py:1479:                                    metaData.albedos.append(f'Albedo_{index}.png')
+./diagnostics/meta.txt:62:./nodes.py:1484:                                    metaData.mrs.append(f'MR_{index}.png')
+./diagnostics/meta.txt:63:./nodes.py:1527:                                        metaData.albedos_upscaled = []
+./diagnostics/meta.txt:64:./nodes.py:1531:                                            metaData.albedos_upscaled.append(f'Albedo_Upscaled_{index}.png')
+./diagnostics/meta.txt:65:./nodes.py:1558:                                        metaData.mrs_upscaled = []
+./diagnostics/meta.txt:66:./nodes.py:1562:                                            metaData.mrs_upscaled.append(f'MR_Upscaled_{index}.png')
+./diagnostics/meta.txt:67:./nodes.py:1576:                            metaData.mesh_file = f'{output_file_name}.glb'
+./diagnostics/meta.txt:68:./nodes.py:1578:                            if export_metadata:
+./diagnostics/meta.txt:69:./nodes.py:1579:                                output_metadata_path = os.path.join(output_mesh_folder,'meta_data.json')
+./diagnostics/meta.txt:70:./nodes.py:1580:                                with open(output_metadata_path,'w') as fw:
+./diagnostics/meta.txt:71:./nodes.py:1581:                                    json.dump(metaData.__dict__, indent="\t", fp=fw)
+./diagnostics/meta.txt:72:./nodes.py:1644:                "metadata_file": ("STRING",),
+./diagnostics/meta.txt:73:./nodes.py:1655:    def process(self, trimesh, metadata_file, view_size, texture_size):
+./diagnostics/meta.txt:74:./nodes.py:1659:        with open(metadata_file, 'r') as fr:
+./diagnostics/meta.txt:75:./nodes.py:1661:            loaded_metaData = MetaData()
+./diagnostics/meta.txt:76:./nodes.py:1663:                setattr(loaded_metaData, key, value)        
+./diagnostics/meta.txt:77:./nodes.py:1665:        conf = Hunyuan3DPaintConfig(view_size, loaded_metaData.camera_config["selected_camera_azims"], loaded_metaData.camera_config["selected_camera_elevs"], loaded_metaData.camera_config["selected_view_weights"], loaded_metaData.camera_config["ortho_scale"], texture_size)
+./diagnostics/meta.txt:78:./nodes.py:1670:        dir_name = os.path.dirname(metadata_file)
+./diagnostics/meta.txt:79:./nodes.py:1675:        if loaded_metaData.albedos_upscaled != None:
+./diagnostics/meta.txt:80:./nodes.py:1677:            for file in loaded_metaData.albedos_upscaled:
+./diagnostics/meta.txt:81:./nodes.py:1682:            for file in loaded_metaData.mrs_upscaled:
+./diagnostics/meta.txt:82:./nodes.py:1688:            for file in loaded_metaData.albedos:
+./diagnostics/meta.txt:83:./nodes.py:1693:            for file in loaded_metaData.mrs:
+./diagnostics/meta.txt:84:./nodes.py:1701:        return (paint_pipeline, albedos_tensor, mrs_tensor, loaded_metaData.camera_config)     
+./diagnostics/meta.txt:85:./nodes.py:1722:    RETURN_NAMES = ("pipeline", "albedo","mr","metadata","positions","normals",)
+./diagnostics/meta.txt:86:./nodes.py:1751:        metadata = MetaData()
+./diagnostics/meta.txt:87:./nodes.py:1752:        metadata.mesh_file = output_name
+./diagnostics/meta.txt:88:./nodes.py:1753:        metadata.camera_config = camera_config
+./diagnostics/meta.txt:89:./nodes.py:1754:        metadata.albedos = []
+./diagnostics/meta.txt:90:./nodes.py:1755:        metadata.mrs = []
+./diagnostics/meta.txt:91:./nodes.py:1762:            metadata.albedos.append(f'Albedo_{index}.png')
+./diagnostics/meta.txt:92:./nodes.py:1768:            metadata.mrs.append(f'MR_{index}.png')            
+./diagnostics/meta.txt:93:./nodes.py:1770:        return (paint_pipeline, albedo_tensor, mr_tensor, metadata, positions_tensor, normals_tensor,)  
+./diagnostics/meta.txt:94:./nodes.py:1780:                "metadata": ("HY3D21METADATA",),
+./diagnostics/meta.txt:95:./nodes.py:1789:    def process(self, pipeline, albedo, mr, metadata):  
+./diagnostics/meta.txt:96:./nodes.py:1796:        output_mesh_name = metadata.mesh_file
+./diagnostics/meta.txt:97:./nodes.py:1804:            metadata.albedos_upscaled = []
+./diagnostics/meta.txt:98:./nodes.py:1805:            metadata.mrs_upscaled = []
+./diagnostics/meta.txt:99:./nodes.py:1810:                metadata.albedos_upscaled.append(f'Albedo_Upscaled_{index}.png')
+./diagnostics/meta.txt:100:./nodes.py:1815:                metadata.mrs_upscaled.append(f'MR_Upscaled_{index}.png')                
+./diagnostics/meta.txt:101:./nodes.py:1817:        camera_config = metadata.camera_config
+./diagnostics/meta.txt:102:./nodes.py:1840:        metadata.mesh_file = f'{output_mesh_name}.glb'
+./diagnostics/meta.txt:103:./nodes.py:1842:        output_metadata_path = os.path.join(output_dir_path,'meta_data.json')
+./diagnostics/meta.txt:104:./nodes.py:1843:        with open(output_metadata_path,'w') as fw:
+./diagnostics/meta.txt:105:./nodes.py:1844:            json.dump(metadata.__dict__, indent="\t", fp=fw)            
+./diagnostics/meta.txt:106:./nodes.py:1859:                "metadata_file": ("STRING",),
+./diagnostics/meta.txt:107:./nodes.py:1872:    def process(self, metadata_file, view_size, texture_size, target_face_nums):   
+./diagnostics/meta.txt:108:./nodes.py:1885:        with open(metadata_file, 'r') as fr:
+./diagnostics/meta.txt:109:./nodes.py:1887:            loaded_metaData = MetaData()
+./diagnostics/meta.txt:110:./nodes.py:1889:                setattr(loaded_metaData, key, value)        
+./diagnostics/meta.txt:111:./nodes.py:1893:            input_dir = os.path.dirname(metadata_file)
+./diagnostics/meta.txt:112:./nodes.py:1894:            mesh_name = loaded_metaData.mesh_file.replace(".glb","").replace(".obj","")
+./diagnostics/meta.txt:113:./nodes.py:1895:            mesh_file_path = os.path.join(input_dir, loaded_metaData.mesh_file)
+./diagnostics/meta.txt:114:./nodes.py:1898:                conf = Hunyuan3DPaintConfig(view_size, loaded_metaData.camera_config["selected_camera_azims"], loaded_metaData.camera_config["selected_camera_elevs"], loaded_metaData.camera_config["selected_view_weights"], loaded_metaData.camera_config["ortho_scale"], texture_size)
+./diagnostics/meta.txt:115:./nodes.py:1907:                if loaded_metaData.albedos_upscaled != None:
+./diagnostics/meta.txt:116:./nodes.py:1909:                    for file in loaded_metaData.albedos_upscaled:
+./diagnostics/meta.txt:117:./nodes.py:1914:                    for file in loaded_metaData.mrs_upscaled:
+./diagnostics/meta.txt:118:./nodes.py:1920:                    for file in loaded_metaData.albedos:
+./diagnostics/meta.txt:119:./nodes.py:1925:                    for file in loaded_metaData.mrs:
+./diagnostics/meta.txt:120:./nodes.py:1952:                    camera_config = loaded_metaData.camera_config
+./diagnostics/meta.txt:121:./workflow_examples/Mesh_Texturing_With_MetaData.json:192:          "name": "metadata",
+./diagnostics/meta.txt:122:./workflow_examples/Mesh_Texturing_With_MetaData.json:339:          "name": "metadata",
+./diagnostics/meta.txt:123:./workflow_examples/Mesh_Texturing_With_MetaData_Upscaled_With_Model.json:192:          "name": "metadata",
+./diagnostics/meta.txt:124:./workflow_examples/Mesh_Texturing_With_MetaData_Upscaled_With_Model.json:339:          "name": "metadata",

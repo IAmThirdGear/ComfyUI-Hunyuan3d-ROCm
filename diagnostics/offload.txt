@@ -1,0 +1,160 @@
+./hy3dpaint/custom_rasterizer/build/temp.linux-x86_64-cpython-312/build.ninja:8:cuda_post_cflags = -D__HIP_PLATFORM_AMD__=1 -DUSE_ROCM=1 -DHIPBLAS_V2 -fPIC -DCUDA_HAS_FP16=1 -D__HIP_NO_HALF_OPERATORS__=1 -D__HIP_NO_HALF_CONVERSIONS__=1 -DHIP_ENABLE_WARP_SYNC_BUILTINS=1 -O3 -std=c++20 -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=custom_rasterizer_kernel --offload-arch=gfx900 --offload-arch=gfx906 --offload-arch=gfx908 --offload-arch=gfx90a --offload-arch=gfx942 --offload-arch=gfx1030 --offload-arch=gfx1100 --offload-arch=gfx1101 --offload-arch=gfx1102 --offload-arch=gfx1200 --offload-arch=gfx1201 -fno-gpu-rdc
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:784:	    self.unet.enable_model_cpu_offload()
+./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:834:	    unet_2p5d.enable_model_cpu_offload()
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:784:            self.unet.enable_model_cpu_offload()
+./hy3dpaint/hunyuanpaintpbr/unet/modules.py:834:            unet_2p5d.enable_model_cpu_offload()
+./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./hy3dpaint/utils/multiview_utils.bak_patched:56:        pipeline.enable_model_cpu_offload()
+./hy3dpaint/utils/multiview_utils.bak:61:        pipeline.enable_model_cpu_offload()
+./hy3dpaint/utils/multiview_utils.bak:69:            pipeline.enable_sequential_cpu_offload()
+./hy3dpaint/utils/multiview_utils.bak:71:            print(f"Sequential CPU offload unavailable: {e}")
+./hy3dpaint/utils/multiview_utils.bak:74:        # Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./hy3dpaint/utils/multiview_utils.bak:97:        #pipeline.enable_model_cpu_offload()
+./hy3dpaint/utils/multiview_utils.bak:100:        #    pipeline.enable_sequential_cpu_offload()
+./hy3dpaint/utils/multiview_utils.bak:104:        ## Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./hy3dpaint/utils/multiview_utils.py:61:        # pipeline.enable_model_cpu_offload()
+./hy3dpaint/utils/multiview_utils.py:69:            pipeline.enable_sequential_cpu_offload()
+./hy3dpaint/utils/multiview_utils.py:71:            print(f"Sequential CPU offload unavailable: {e}")
+./hy3dpaint/utils/multiview_utils.py:74:        # Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./hy3dpaint/utils/multiview_utils.py:97:        #pipeline.enable_model_cpu_offload()
+./hy3dpaint/utils/multiview_utils.py:100:        #    pipeline.enable_sequential_cpu_offload()
+./hy3dpaint/utils/multiview_utils.py:104:        ## Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./hy3dshape/hy3dshape/pipelines.py:138:    model_cpu_offload_seq = "conditioner->model->vae"
+./hy3dshape/hy3dshape/pipelines.py:139:    _exclude_from_cpu_offload = []
+./hy3dshape/hy3dshape/pipelines.py:323:        [`~DiffusionPipeline.enable_sequential_cpu_offload`] the execution device can only be inferred from
+./hy3dshape/hy3dshape/pipelines.py:327:            if not isinstance(model, torch.nn.Module) or name in self._exclude_from_cpu_offload:
+./hy3dshape/hy3dshape/pipelines.py:341:    def enable_model_cpu_offload(self, gpu_id: Optional[int] = None, device: Union[torch.device, str] = "cuda"):
+./hy3dshape/hy3dshape/pipelines.py:344:        to `enable_sequential_cpu_offload`, this method moves one whole model at a time to the GPU when its `forward`
+./hy3dshape/hy3dshape/pipelines.py:346:        `enable_sequential_cpu_offload`, but performance is much better due to the iterative execution of the `unet`.
+./hy3dshape/hy3dshape/pipelines.py:355:        if self.model_cpu_offload_seq is None:
+./hy3dshape/hy3dshape/pipelines.py:357:                "Model CPU offload cannot be enabled because no `model_cpu_offload_seq` class attribute is set."
+./hy3dshape/hy3dshape/pipelines.py:361:            from accelerate import cpu_offload_with_hook
+./hy3dshape/hy3dshape/pipelines.py:363:            raise ImportError("`enable_model_cpu_offload` requires `accelerate v0.17.0` or higher.")
+./hy3dshape/hy3dshape/pipelines.py:375:        # _offload_gpu_id should be set to passed gpu_id (or id in passed `device`)
+./hy3dshape/hy3dshape/pipelines.py:377:        self._offload_gpu_id = gpu_id or torch_device.index or getattr(self, "_offload_gpu_id", 0)
+./hy3dshape/hy3dshape/pipelines.py:380:        device = torch.device(f"{device_type}:{self._offload_gpu_id}")
+./hy3dshape/hy3dshape/pipelines.py:393:        for model_str in self.model_cpu_offload_seq.split("->"):
+./hy3dshape/hy3dshape/pipelines.py:398:            _, hook = cpu_offload_with_hook(model, device, prev_module_hook=hook)
+./hy3dshape/hy3dshape/pipelines.py:401:        # CPU offload models that are not in the seq chain unless they are explicitly excluded
+./hy3dshape/hy3dshape/pipelines.py:409:            if name in self._exclude_from_cpu_offload:
+./hy3dshape/hy3dshape/pipelines.py:412:                _, hook = cpu_offload_with_hook(model, device)
+./hy3dshape/hy3dshape/pipelines.py:417:        Function that offloads all components, removes all model hooks that were added when using
+./hy3dshape/hy3dshape/pipelines.py:418:        `enable_model_cpu_offload` and then applies them again. In case the model has not been offloaded this function
+./hy3dshape/hy3dshape/pipelines.py:420:        functions correctly when applying enable_model_cpu_offload.
+./hy3dshape/hy3dshape/pipelines.py:423:            # `enable_model_cpu_offload` has not be called, so silently do nothing
+./hy3dshape/hy3dshape/pipelines.py:427:            # offload model and remove hook from model
+./hy3dshape/hy3dshape/pipelines.py:428:            hook.offload()
+./hy3dshape/hy3dshape/pipelines.py:432:        self.enable_model_cpu_offload()
+./nodes.py:275:        offload_device=mm.unet_offload_device()
+./nodes.py:288:            offload_device=offload_device,
+./nodes.py:342:        # offload_device=mm.unet_offload_device()
+./nodes.py:355:            # offload_device=offload_device,
+./nodes.py:421:        offload_device=mm.unet_offload_device()
+./nodes.py:590:        offload_device=mm.unet_offload_device()
+./nodes.py:704:                "force_offload": ("BOOLEAN", {"default": False, "tooltip": "Offloads the model to the offload device once the process is done."}),
+./nodes.py:713:    def process(self, vae, latents, box_v, octree_resolution, mc_level, num_chunks, mc_algo, enable_flash_vdm, force_offload):
+./nodes.py:715:        offload_device = mm.unet_offload_device()
+./nodes.py:736:        if force_offload==True:
+./nodes.py:737:            vae.to(offload_device)
+./nodes.py:1226:                "force_offload": ("BOOLEAN", {"default": False, "tooltip": "Offloads the model to the offload device once the process is done."}),
+./nodes.py:1237:    def process(self, input_folder, output_folder, vae_model_name, dit_model_name, steps, guidance_scale, attention_mode, box_v, octree_resolution, num_chunks, mc_level, mc_algo, simplify, target_face_num, seed, generate_random_seed, file_format, remove_background, skip_generated_mesh, enable_flash_vdm, force_offload):       
+./nodes.py:1239:        offload_device=mm.unet_offload_device()
+./nodes.py:1255:                offload_device=offload_device,
+./nodes.py:1329:                    if force_offload==True:
+./nodes.py:1330:                        vae.to(offload_device)
+./nodes.py:1418:        offload_device=mm.unet_offload_device()     
+./nodes.py:1630:        offload_device=mm.unet_offload_device()
+./nodes.py:1657:        offload_device=mm.unet_offload_device()
+./nodes.py:1728:        offload_device=mm.unet_offload_device()
+./nodes.py:1879:        offload_device=mm.unet_offload_device()
+./diagnostics/meta.txt:44:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:46:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:47:./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./diagnostics/meta.txt:49:./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/meta.txt:50:./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/meta.txt:168:./diagnostics/meta.txt:44:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:170:./diagnostics/meta.txt:46:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/meta.txt:171:./diagnostics/meta.txt:47:./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./diagnostics/meta.txt:173:./diagnostics/meta.txt:49:./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/meta.txt:174:./diagnostics/meta.txt:50:./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/to_calls.txt:197:./nodes.py:737:            vae.to(offload_device)
+./diagnostics/to_calls.txt:200:./nodes.py:1330:                        vae.to(offload_device)
+./diagnostics/to_calls.txt:402:./diagnostics/to_calls.txt:197:./nodes.py:737:            vae.to(offload_device)
+./diagnostics/to_calls.txt:405:./diagnostics/to_calls.txt:200:./nodes.py:1330:                        vae.to(offload_device)
+./diagnostics/offload.txt:1:./hy3dpaint/custom_rasterizer/build/temp.linux-x86_64-cpython-312/build.ninja:8:cuda_post_cflags = -D__HIP_PLATFORM_AMD__=1 -DUSE_ROCM=1 -DHIPBLAS_V2 -fPIC -DCUDA_HAS_FP16=1 -D__HIP_NO_HALF_OPERATORS__=1 -D__HIP_NO_HALF_CONVERSIONS__=1 -DHIP_ENABLE_WARP_SYNC_BUILTINS=1 -O3 -std=c++20 -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=custom_rasterizer_kernel --offload-arch=gfx900 --offload-arch=gfx906 --offload-arch=gfx908 --offload-arch=gfx90a --offload-arch=gfx942 --offload-arch=gfx1030 --offload-arch=gfx1100 --offload-arch=gfx1101 --offload-arch=gfx1102 --offload-arch=gfx1200 --offload-arch=gfx1201 -fno-gpu-rdc
+./diagnostics/offload.txt:2:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/offload.txt:3:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:784:	    self.unet.enable_model_cpu_offload()
+./diagnostics/offload.txt:4:./hy3dpaint/hunyuanpaintpbr/unet/modules.bak:834:	    unet_2p5d.enable_model_cpu_offload()
+./diagnostics/offload.txt:5:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:782:        # CPU offloading works well on CUDA but can leave meta tensors on ROCm.
+./diagnostics/offload.txt:6:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:784:            self.unet.enable_model_cpu_offload()
+./diagnostics/offload.txt:7:./hy3dpaint/hunyuanpaintpbr/unet/modules.py:834:            unet_2p5d.enable_model_cpu_offload()
+./diagnostics/offload.txt:8:./hy3dpaint/hunyuanpaintpbr/pipeline.py:111:        # ROCm: avoid Accelerate meta-tensor offloading hooks.
+./diagnostics/offload.txt:9:./hy3dpaint/utils/multiview_utils.bak_patched:56:        pipeline.enable_model_cpu_offload()
+./diagnostics/offload.txt:10:./hy3dpaint/utils/multiview_utils.bak:61:        pipeline.enable_model_cpu_offload()
+./diagnostics/offload.txt:11:./hy3dpaint/utils/multiview_utils.bak:69:            pipeline.enable_sequential_cpu_offload()
+./diagnostics/offload.txt:12:./hy3dpaint/utils/multiview_utils.bak:71:            print(f"Sequential CPU offload unavailable: {e}")
+./diagnostics/offload.txt:13:./hy3dpaint/utils/multiview_utils.bak:74:        # Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./diagnostics/offload.txt:14:./hy3dpaint/utils/multiview_utils.bak:97:        #pipeline.enable_model_cpu_offload()
+./diagnostics/offload.txt:15:./hy3dpaint/utils/multiview_utils.bak:100:        #    pipeline.enable_sequential_cpu_offload()
+./diagnostics/offload.txt:16:./hy3dpaint/utils/multiview_utils.bak:104:        ## Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./diagnostics/offload.txt:17:./hy3dpaint/utils/multiview_utils.py:61:        # pipeline.enable_model_cpu_offload()
+./diagnostics/offload.txt:18:./hy3dpaint/utils/multiview_utils.py:69:            pipeline.enable_sequential_cpu_offload()
+./diagnostics/offload.txt:19:./hy3dpaint/utils/multiview_utils.py:71:            print(f"Sequential CPU offload unavailable: {e}")
+./diagnostics/offload.txt:20:./hy3dpaint/utils/multiview_utils.py:74:        # Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./diagnostics/offload.txt:21:./hy3dpaint/utils/multiview_utils.py:97:        #pipeline.enable_model_cpu_offload()
+./diagnostics/offload.txt:22:./hy3dpaint/utils/multiview_utils.py:100:        #    pipeline.enable_sequential_cpu_offload()
+./diagnostics/offload.txt:23:./hy3dpaint/utils/multiview_utils.py:104:        ## Do NOT move the pipeline back to the GPU after enabling CPU offload.
+./diagnostics/offload.txt:24:./hy3dpaint/utils/multiview_utils.py:148:	# Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/offload.txt:25:./hy3dpaint/utils/multiview_utils.py:156:        # Accelerate CPU offloading leaves pipeline.device as "meta".
+./diagnostics/offload.txt:26:./hy3dshape/hy3dshape/pipelines.py:138:    model_cpu_offload_seq = "conditioner->model->vae"
+./diagnostics/offload.txt:27:./hy3dshape/hy3dshape/pipelines.py:139:    _exclude_from_cpu_offload = []
+./diagnostics/offload.txt:28:./hy3dshape/hy3dshape/pipelines.py:323:        [`~DiffusionPipeline.enable_sequential_cpu_offload`] the execution device can only be inferred from
+./diagnostics/offload.txt:29:./hy3dshape/hy3dshape/pipelines.py:327:            if not isinstance(model, torch.nn.Module) or name in self._exclude_from_cpu_offload:
+./diagnostics/offload.txt:30:./hy3dshape/hy3dshape/pipelines.py:341:    def enable_model_cpu_offload(self, gpu_id: Optional[int] = None, device: Union[torch.device, str] = "cuda"):
+./diagnostics/offload.txt:31:./hy3dshape/hy3dshape/pipelines.py:344:        to `enable_sequential_cpu_offload`, this method moves one whole model at a time to the GPU when its `forward`
+./diagnostics/offload.txt:32:./hy3dshape/hy3dshape/pipelines.py:346:        `enable_sequential_cpu_offload`, but performance is much better due to the iterative execution of the `unet`.
+./diagnostics/offload.txt:33:./hy3dshape/hy3dshape/pipelines.py:355:        if self.model_cpu_offload_seq is None:
+./diagnostics/offload.txt:34:./hy3dshape/hy3dshape/pipelines.py:357:                "Model CPU offload cannot be enabled because no `model_cpu_offload_seq` class attribute is set."
+./diagnostics/offload.txt:35:./hy3dshape/hy3dshape/pipelines.py:361:            from accelerate import cpu_offload_with_hook
+./diagnostics/offload.txt:36:./hy3dshape/hy3dshape/pipelines.py:363:            raise ImportError("`enable_model_cpu_offload` requires `accelerate v0.17.0` or higher.")
+./diagnostics/offload.txt:37:./hy3dshape/hy3dshape/pipelines.py:375:        # _offload_gpu_id should be set to passed gpu_id (or id in passed `device`)
+./diagnostics/offload.txt:38:./hy3dshape/hy3dshape/pipelines.py:377:        self._offload_gpu_id = gpu_id or torch_device.index or getattr(self, "_offload_gpu_id", 0)
+./diagnostics/offload.txt:39:./hy3dshape/hy3dshape/pipelines.py:380:        device = torch.device(f"{device_type}:{self._offload_gpu_id}")
+./diagnostics/offload.txt:40:./hy3dshape/hy3dshape/pipelines.py:393:        for model_str in self.model_cpu_offload_seq.split("->"):
+./diagnostics/offload.txt:41:./hy3dshape/hy3dshape/pipelines.py:398:            _, hook = cpu_offload_with_hook(model, device, prev_module_hook=hook)
+./diagnostics/offload.txt:42:./hy3dshape/hy3dshape/pipelines.py:401:        # CPU offload models that are not in the seq chain unless they are explicitly excluded
+./diagnostics/offload.txt:43:./hy3dshape/hy3dshape/pipelines.py:409:            if name in self._exclude_from_cpu_offload:
+./diagnostics/offload.txt:44:./hy3dshape/hy3dshape/pipelines.py:412:                _, hook = cpu_offload_with_hook(model, device)
+./diagnostics/offload.txt:45:./hy3dshape/hy3dshape/pipelines.py:417:        Function that offloads all components, removes all model hooks that were added when using
+./diagnostics/offload.txt:46:./hy3dshape/hy3dshape/pipelines.py:418:        `enable_model_cpu_offload` and then applies them again. In case the model has not been offloaded this function
+./diagnostics/offload.txt:47:./hy3dshape/hy3dshape/pipelines.py:420:        functions correctly when applying enable_model_cpu_offload.
+./diagnostics/offload.txt:48:./hy3dshape/hy3dshape/pipelines.py:423:            # `enable_model_cpu_offload` has not be called, so silently do nothing
+./diagnostics/offload.txt:49:./hy3dshape/hy3dshape/pipelines.py:427:            # offload model and remove hook from model
+./diagnostics/offload.txt:50:./hy3dshape/hy3dshape/pipelines.py:428:            hook.offload()
+./diagnostics/offload.txt:51:./hy3dshape/hy3dshape/pipelines.py:432:        self.enable_model_cpu_offload()
+./diagnostics/offload.txt:52:./nodes.py:275:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:53:./nodes.py:288:            offload_device=offload_device,
+./diagnostics/offload.txt:54:./nodes.py:342:        # offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:55:./nodes.py:355:            # offload_device=offload_device,
+./diagnostics/offload.txt:56:./nodes.py:421:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:57:./nodes.py:590:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:58:./nodes.py:704:                "force_offload": ("BOOLEAN", {"default": False, "tooltip": "Offloads the model to the offload device once the process is done."}),
+./diagnostics/offload.txt:59:./nodes.py:713:    def process(self, vae, latents, box_v, octree_resolution, mc_level, num_chunks, mc_algo, enable_flash_vdm, force_offload):
+./diagnostics/offload.txt:60:./nodes.py:715:        offload_device = mm.unet_offload_device()
+./diagnostics/offload.txt:61:./nodes.py:736:        if force_offload==True:
+./diagnostics/offload.txt:62:./nodes.py:737:            vae.to(offload_device)
+./diagnostics/offload.txt:63:./nodes.py:1226:                "force_offload": ("BOOLEAN", {"default": False, "tooltip": "Offloads the model to the offload device once the process is done."}),
+./diagnostics/offload.txt:64:./nodes.py:1237:    def process(self, input_folder, output_folder, vae_model_name, dit_model_name, steps, guidance_scale, attention_mode, box_v, octree_resolution, num_chunks, mc_level, mc_algo, simplify, target_face_num, seed, generate_random_seed, file_format, remove_background, skip_generated_mesh, enable_flash_vdm, force_offload):       
+./diagnostics/offload.txt:65:./nodes.py:1239:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:66:./nodes.py:1255:                offload_device=offload_device,
+./diagnostics/offload.txt:67:./nodes.py:1329:                    if force_offload==True:
+./diagnostics/offload.txt:68:./nodes.py:1330:                        vae.to(offload_device)
+./diagnostics/offload.txt:69:./nodes.py:1418:        offload_device=mm.unet_offload_device()     
+./diagnostics/offload.txt:70:./nodes.py:1630:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:71:./nodes.py:1657:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:72:./nodes.py:1728:        offload_device=mm.unet_offload_device()
+./diagnostics/offload.txt:73:./nodes.py:1879:        offload_device=mm.unet_offload_device()
